@@ -1,30 +1,66 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Keyboard from './components/Keyboard.vue'
 import Lampboard from './components/Lampboard.vue'
 import Plugboard from './components/Plugboard.vue'
-import Rotors from './components/Rotors.vue'
+import RotorComponent from './components/Rotors.vue'
 import Output from './components/Output.vue'
 import { reactive } from '@vue/reactivity'
+import { GlobalState } from './types'
+import { Rotors } from './enigma/Rotor'
+import { Reflectors } from './enigma/Reflector'
+import { provide } from 'vue'
 
-const state = reactive({
+const state = reactive<GlobalState>({
   rotors: {
-    left: 0,
-    middle: 0,
-    right: 0,
+    left: {
+      name: Rotors.I,
+      position: 0,
+      ringSetting: 0
+    },
+    middle: {
+      name: Rotors.II,
+      position: 0,
+      ringSetting: 0
+    },
+    right: {
+      name: Rotors.III,
+      position: 0,
+      ringSetting: 0
+    },
   },
-  ringSettings: {
-    left: 0,
-    middle: 0,
-    right: 0,
+  reflector: Reflectors.B,
+  plugboard: {
+    A: '',
+    B: '',
+    C: '',
+    D: '',
+    E: '',
+    F: '',
+    G: '',
+    H: '',
+    I: '',
+    J: '',
+    K: '',
+    L: '',
+    M: '',
+    N: '',
+    O: '',
+    P: '',
+    Q: '',
+    R: '',
+    S: '',
+    T: '',
+    U: '',
+    V: '',
+    W: '',
+    X: '',
+    Y: '',
+    Z: ''
   },
-  reflector: 0,
-  plugboard: {},
   input: '',
-  output: '',
+  output: ''
 })
-
+provide('state', state)
 </script>
 
 <template>
@@ -36,19 +72,19 @@ const state = reactive({
 
   <section class="columns mb-5">
     <section class="rotors column is-half has-text-centered">
-      <Rotors />
+      <RotorComponent/>
     </section>
     <section class="plugboard column is-half has-text-centered">
-      <Plugboard />
+      <Plugboard/>
     </section>
   </section>
 
   <section class="lampboard container has-text-centered mb-5">
-    <Lampboard />
+    <Lampboard/>
   </section>
 
   <section class="keyboard container has-text-centered mb-5">
-    <Keyboard />
+    <Keyboard/>
   </section>
 
   <section class="output container has-text-centered mb-5">

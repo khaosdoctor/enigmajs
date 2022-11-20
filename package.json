@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lodash.chunk": "^4.2.0",
     "vue": "^3.2.41"
   },
   "devDependencies": {
+    "@types/lodash.chunk": "^4.2.7",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@vitejs/plugin-vue": "^3.2.0",
     "eslint": "^8.28.0",

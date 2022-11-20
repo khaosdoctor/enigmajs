@@ -1,9 +1,17 @@
-enum RotorWirings {
+export enum RotorWirings {
   I = "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
   II = "AJDKSIRUXBLHWTMCQGZNPYFVOE",
   III = "BDFHJLCPRTXVZNYEIWGAKMUSQO",
   IV = "ESOVPZJAYQUIRHXLNFTGKDCMWB",
   V = "VZBRGITYUPSDNHLXAWMJQOFECK",
+}
+
+export enum Rotors {
+  I = "I",
+  II = "II",
+  III = "III",
+  IV = "IV",
+  V = "V",
 }
 
 const rotorConfigurations = {
@@ -49,7 +57,7 @@ export class Rotor {
   #wiring: RotorWirings
   #notch: typeof rotorConfigurations.I.notch
 
-  constructor (private readonly name: keyof typeof RotorWirings, private position: number, private readonly ringSetting: number) {
+  constructor (private readonly name: Rotors, private position: number, private readonly ringSetting: number) {
     this.#wiring = rotorConfigurations[name].wiring
     this.#notch = rotorConfigurations[name].notch
   }

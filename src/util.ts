@@ -5,3 +5,7 @@ export function alphabetIndex (letter: string): number {
 export function alphabetLetter (index: number): string {
   return String.fromCharCode(index + 65)
 }
+
+export function isLetter (letter: string): boolean {
+  return letter.match(/[a-z]/i) !== null
+}
