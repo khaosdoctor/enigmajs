@@ -2,10 +2,8 @@
   <h1>output</h1>
 </template>
 
-<script>
-export default {
+<script setup lang="ts">
 
-}
 </script>
 
 <style>

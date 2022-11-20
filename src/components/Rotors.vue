@@ -3,12 +3,7 @@
   <h1>Rotores</h1>
 </template>
 
-<script lang="ts">
-export default {
-data() {
-
-}
-}
+<script setup lang="ts">
 </script>
 
 <style>
