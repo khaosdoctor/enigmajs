@@ -6,29 +6,20 @@ import RotorComponent from './components/Rotors.vue'
 import Output from './components/Output.vue'
 import { reactive } from '@vue/reactivity'
 import { GlobalState } from './types'
-import { Rotors } from './enigma/Rotor'
-import { Reflectors } from './enigma/Reflector'
+import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
+import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide } from 'vue'
+
 
 const state = reactive<GlobalState>({
   rotors: {
-    left: {
-      name: Rotors.I,
-      position: 0,
-      ringSetting: 0
-    },
-    middle: {
-      name: Rotors.II,
-      position: 0,
-      ringSetting: 0
-    },
-    right: {
-      name: Rotors.III,
-      position: 0,
-      ringSetting: 0
-    },
+    [RotorPositions.LEFT]: new Rotor(Rotors.III, 0, 0),
+    [RotorPositions.MIDDLE]: new Rotor(Rotors.II, 0, 0),
+    [RotorPositions.RIGHT]: new Rotor(Rotors.I, 0, 0)
   },
-  reflector: Reflectors.B,
+  // UKW-B was the most common reflector used by the German military during WWII
+  // since changing reflectors was a time-consuming process.
+  reflector: new Reflector(Reflectors.B),
   plugboard: {
     A: '',
     B: '',
@@ -93,4 +84,15 @@ provide('state', state)
 </template>
 
 <style scoped>
+.plugboard {
+  border-left: 1px dashed #ededed;
+  border-bottom: 1px dashed #ededed;
+}
+
+.rotors, .lampboard, .keyboard {
+  border-bottom: 1px dashed #ededed;
+}
+header {
+  border-bottom: 1px double #dedede;
+}
 </style>
