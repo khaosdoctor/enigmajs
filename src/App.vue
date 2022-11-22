@@ -1,3 +1,47 @@
+<template>
+  <header class="column is-full has-text-centered mt-2 mb-5">
+    <div class="logo">
+      <img src="/enigma-mtl.png" alt="">
+    </div>
+
+    <div class="description">
+      <p>
+        This is a simple Enigma machine simulator. It is not a perfect replica of the original machine, but it is close enough to be useful for learning about it.
+      </p>
+
+      <p>
+        This replicates the Wermacht I (or the Enigma I) machine, which was used by the German military during World War II. It is a three-rotor machine, with a reflector and a plugboard. The rotors are interchangeable, as well as the reflector (despite it was not that common to do so since it took a long time).
+      </p>
+
+      <p>
+        I used this <a href="https://www.cryptomuseum.com/crypto/enigma/index.htm" target="_blank">excellent resource</a> to learn about the machine and to build this simulator, the logo is also a courtesy of them (with an addition of a metal gradient border by me). And the code is heavily inspired on the professor <a href="http://github.com/mikepound">Mike Pound's</a> version of the Enigma machine, which you can find <a href="https://github.com/mikepound/enigma" target="_blank">here</a>.
+      </p>
+    </div>
+
+  </header>
+
+  <section class="columns mb-5">
+    <section class="rotors column is-half has-text-centered">
+      <RotorComponent/>
+    </section>
+    <section class="plugboard column is-half has-text-centered">
+      <Plugboard/>
+    </section>
+  </section>
+
+  <section class="lampboard container has-text-centered mb-5">
+    <Lampboard/>
+  </section>
+
+  <section class="keyboard container has-text-centered mb-5">
+    <Keyboard/>
+  </section>
+
+  <section class="output container has-text-centered mb-5">
+    <Output />
+  </section>
+</template>
+
 <script setup lang="ts">
 import Keyboard from './components/Keyboard.vue'
 import Lampboard from './components/Lampboard.vue'
@@ -10,7 +54,17 @@ import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide } from 'vue'
 
-
+/**
+ * The global state approach is not the best option in the case of any app
+ * however, since this is a single machine I could chose from two options:
+ * - Use a global state like this and have a single source of truth, therefore
+ *   the application itself represents the Enigma machine and the state is declared
+ *   in the topmost component (this one)
+ * - Use a local state and make the application create a new machine every time
+ *   the configuration changes, this would be a better approach if we had multiple
+ *   machines and we wanted to keep the state of each one of them like other sims
+ *   since this only emulates Enigma I this is not needed
+ */
 const state = reactive<GlobalState>({
   rotors: {
     [RotorPositions.LEFT]: new Rotor(Rotors.III, 0, 0),
@@ -51,37 +105,9 @@ const state = reactive<GlobalState>({
   input: '',
   output: ''
 })
+
 provide('state', state)
 </script>
-
-<template>
-  <header class="column is-full has-text-centered mt-2 mb-5">
-    <div class="logo">
-      <img src="/enigma-mtl.png" alt="">
-    </div>
-  </header>
-
-  <section class="columns mb-5">
-    <section class="rotors column is-half has-text-centered">
-      <RotorComponent/>
-    </section>
-    <section class="plugboard column is-half has-text-centered">
-      <Plugboard/>
-    </section>
-  </section>
-
-  <section class="lampboard container has-text-centered mb-5">
-    <Lampboard/>
-  </section>
-
-  <section class="keyboard container has-text-centered mb-5">
-    <Keyboard/>
-  </section>
-
-  <section class="output container has-text-centered mb-5">
-    <Output />
-  </section>
-</template>
 
 <style scoped>
 .plugboard {
@@ -92,7 +118,18 @@ provide('state', state)
 .rotors, .lampboard, .keyboard {
   border-bottom: 1px dashed #ededed;
 }
-header {
-  border-bottom: 1px double #dedede;
+
+.rotors, .plugboard {
+  border-top: 1px dashed #ededed;
+}
+
+header .description {
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+header p {
+  margin-top: 5px;
+  white-space: pre-wrap;
 }
 </style>
