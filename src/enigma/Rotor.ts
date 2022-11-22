@@ -1,4 +1,4 @@
-// Code heavily inspired on Professor's Mike Pound's (@mikepound) Enigma Machine: https://github.com/mikepound/enigma/blob/07b8469d29850499df105f3077df32a638c68cc4/src/com/mikepound/enigma/Rotor.java
+// Code heavily inspired on Professor Mike Pound's (@mikepound) Enigma Machine: https://github.com/mikepound/enigma/blob/07b8469d29850499df105f3077df32a638c68cc4/src/com/mikepound/enigma/Rotor.java
 import {toAlphabetIndex, normalizeToAlphabetBounds} from '../util'
 
 enum RotorWirings {
