@@ -95,11 +95,11 @@ const setRingSetting = (position: RotorPositions, letterAsChar: string) => {
 <style>
 .nextPosition, .previousPosition {
   color: #b3b3b3;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .rotor-position {
-  border-top: 1px dashed #bfbfbf;
+  border-top: 1px solid #ececec;
   padding: 5px 0;
 }
 </style>
