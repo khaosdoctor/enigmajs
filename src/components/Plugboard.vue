@@ -1,5 +1,6 @@
 <template>
-<section id="plugboard" class="container columns">
+<h2 class="mb-3"><strong>Plugboard</strong></h2>
+<section id="plugboard" class="columns">
   <div v-for="column in columns" class="column is-2">
     <PlugboardInput v-for="letter in column" @plugboard-set="onInput" :plugboard-position="letter"/>
   </div>
@@ -10,11 +11,11 @@
 import { inject } from 'vue'
 import {isLetter} from '../util'
 import chunk from 'lodash.chunk'
-import { AllowedAlphabet, GlobalState } from '../types'
+import { AllowedAlphabet, ALLOWED_ALPHABET, GlobalState } from '../types'
 import PlugboardInput from '../fragments/PlugboardInput.vue'
 
 const ITEMS_PER_COLUMN = 5
-const columns = chunk('ABCDEFGHIJKLMNOPQRSTUVWXYZ', ITEMS_PER_COLUMN) as AllowedAlphabet[][]
+const columns = chunk(ALLOWED_ALPHABET, ITEMS_PER_COLUMN) as AllowedAlphabet[][]
 const state = inject<GlobalState>('state') as GlobalState
 
 const onInput = (event: Event, plugboardPosition: AllowedAlphabet) => {
