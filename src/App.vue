@@ -34,7 +34,7 @@
   </section>
 
   <section class="keyboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered mb-5">
-    <Keyboard/>
+    <Keyboard @key-pressed="handleKeyPress"/>
   </section>
 
   <section class="output has-text-centered mb-5">
@@ -59,7 +59,7 @@ import Plugboard from './components/Plugboard.vue'
 import RotorComponent from './components/Rotors.vue'
 import Output from './components/Output.vue'
 import { reactive } from '@vue/reactivity'
-import { GlobalState } from './types'
+import { AllowedAlphabet, GlobalState } from './types'
 import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide, ref } from 'vue'
@@ -115,8 +115,24 @@ const state = reactive<GlobalState>({
   input: '',
   output: ''
 })
-const switchedOnLetter = ref('')
+
 provide('state', state)
+// letter that's currently being switched on in the lampboard
+const switchedOnLetter = ref('')
+// throttling the turn off of the lamp to make it look more realistic
+let timeoutClock: number | null = null
+
+const handleKeyPress = (keyChar: AllowedAlphabet) => {
+  turnOnLampboard(keyChar)
+}
+
+const turnOnLampboard = (keyChar: AllowedAlphabet) => {
+  switchedOnLetter.value = keyChar
+  if (timeoutClock) clearTimeout(timeoutClock)
+  timeoutClock = setTimeout(() => {
+    switchedOnLetter.value = ''
+  }, 1000)
+}
 </script>
 
 <style scoped>

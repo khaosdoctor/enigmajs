@@ -1,13 +1,15 @@
 <template>
   <div class="keyboard-row columns has-text-centered" v-for="row in KEYBOARD_ROWS">
     <span v-for="letter in row" class="column keyboard-key-wrapper mb-5">
-      <span :class="`keyboard-letter-${letter} keyboard-key ml-6`">{{letter}}</span>
+      <button type="button" @click="emit('key-pressed', letter)" :class="`keyboard-letter-${letter} keyboard-key ml-6`">{{letter}}</button>
     </span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { KEYBOARD_ROWS } from '../types'
+const emit = defineEmits(['key-pressed'])
+
 </script>
 
 <style scoped>
@@ -24,6 +26,7 @@ import { KEYBOARD_ROWS } from '../types'
   font-weight: bold;
   cursor: pointer;
   border: 3px solid #999;
+  font-size: 18px;
 }
 
 .keyboard-key:hover {
