@@ -6,7 +6,7 @@
 
     <div class="description">
       <p>
-        This replicates the <strong>Wermacht I (or the Enigma I)</strong> machine, which was used by the German military during World War II. It is not a perfect replica of the original machine, but it is close enough to be useful for learning about it. It is a three-rotor machine, with a reflector and a plugboard. The rotors are interchangeable, as well as the reflector.
+        This replicates the <strong>Wehrmacht I (or the Enigma I)</strong> machine, which was used by the German military during World War II. It is not a perfect replica of the original machine, but it is close enough to be useful for learning about it. It is a three-rotor machine, with a reflector and a plugboard. The rotors are interchangeable, as well as the reflector.
       </p>
 
       <p>
