@@ -1,8 +1,8 @@
 <template>
   <div class="header is-flex is-flex-direction-row is-align-content-center is-justify-content-center is-align-items-center">
     <h1 class="mb-2">Output</h1>
-    <span @click="copy" class="icon copy"><i class="fas fa-copy"></i></span>
-    <span @click="clear" class="icon clear"><i class="fas fa-times"></i></span>
+    <span title="Copy output" @click="copy" class="icon copy"><i class="fas fa-copy"></i></span>
+    <span title="Clear all" @click="clear" class="icon clear"><i class="fas fa-times"></i></span>
   </div>
   <section class="columns output-wrapper has-text-centered is-family-code">
     <div class="column output-text">
@@ -37,6 +37,7 @@ const clear = (e: Event) => {
   e.preventDefault()
   state.output = ''
   state.keyboardInput = ''
+  state.steps = []
 }
 </script>
 
