@@ -134,7 +134,7 @@ Se você quiser continuar lendo, preparei [esta grande lista de links](https://l
 
 O livro do professor David Kahn [The Codebreakers](https://www.amazon.com/Codebreakers-Comprehensive-History-Communication-Internet/dp/0684831309/ref=sr_1_1?keywords=the+codebreakers&qid=1669233736&sr=8-1) é uma ótima leitura se você quiser saber mais sobre o Enigma e as pessoas que o quebraram.
 
-O professor @mikepound tem uma implementação super legal da mesma máquina em Java, você pode dar uma olhada [aqui](https://github.com/mikepound/enigma).
+O professor [Mike Pound](https://github.com/mikepound) tem uma implementação super legal da mesma máquina em Java, você pode dar uma olhada [aqui](https://github.com/mikepound/enigma).
 
 ## Contribuição e Desenvolvimento
 
