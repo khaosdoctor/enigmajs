@@ -134,7 +134,7 @@ If you want to continue reading, I've prepared [this big list of links](https://
 
 Professor David Kahn's book [The Codebreakers](https://www.amazon.com/Codebreakers-Comprehensive-History-Communication-Internet/dp/0684831309/ref=sr_1_1?keywords=the+codebreakers&qid=1669233736&sr=8-1) is a great read if you want to learn more about the Enigma and the people who broke it.
 
-Also, professor @mikepound has a very nice Java implementation of Enigma which I used to base myself in some of the logic, check it out [here](https://github.com/mikepound/enigma).
+Also, professor [Mike Pound](https://github.com/mikepound) has a very nice Java implementation of Enigma which I used to base myself in some of the logic, check it out [here](https://github.com/mikepound/enigma).
 ## Contributing and Development
 
 To contribue to the project, please submit a PR. This project is built using Vue.js + Vite and TypeScript. All the code is commented so the main parts of the logic are not lost.
