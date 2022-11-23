@@ -29,16 +29,18 @@
     </section>
   </section>
 
+  <section class="output has-text-centered mb-5">
+    <Output />
+  </section>
+
   <section class="lampboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered">
     <Lampboard :switch-on="switchedOnLetter"/>
   </section>
 
   <section class="keyboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered mb-5">
+    <h1>Input</h1>
+    <KeyboardInput @keyboard-input="handleKeyPress"/>
     <Keyboard @key-pressed="handleKeyPress"/>
-  </section>
-
-  <section class="output has-text-centered mb-5">
-    <Output />
   </section>
 
   <footer>
@@ -58,11 +60,13 @@ import Lampboard from './components/Lampboard.vue'
 import Plugboard from './components/Plugboard.vue'
 import RotorComponent from './components/Rotors.vue'
 import Output from './components/Output.vue'
+import KeyboardInput from './fragments/KeyboardInput.vue'
 import { reactive } from '@vue/reactivity'
-import { AllowedAlphabet, GlobalState } from './types'
+import { AllowedAlphabet, ALLOWED_ALPHABET, GlobalState } from './types'
 import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide, ref } from 'vue'
+import { toChar } from './util'
 
 /**
  * The global state approach is not the best option in the case of any app
@@ -112,9 +116,13 @@ const state = reactive<GlobalState>({
     Y: '',
     Z: ''
   },
-  input: '',
-  output: ''
+  output: '',
+  keyboardInput: '',
+  steps: []
 })
+
+// REFS AND VARIABLES
+
 
 provide('state', state)
 // letter that's currently being switched on in the lampboard
@@ -122,16 +130,118 @@ const switchedOnLetter = ref('')
 // throttling the turn off of the lamp to make it look more realistic
 let timeoutClock: number | null = null
 
+// MAIN LOGIC
+
+/**
+ * Main logic for enigma
+ * This is what makes the machine work and all the quirks are in implemented here
+ */
 const handleKeyPress = (keyChar: AllowedAlphabet) => {
-  turnOnLampboard(keyChar)
+  const {rotors:{LEFT: leftRotor, MIDDLE: middleRotor, RIGHT: rightRotor}, reflector} = state
+
+  addStep(`-------- ROTATION FOR KEY ${keyChar} --------`)
+  addStep(`Rotors before rotation: ${toChar(leftRotor.position)} ${toChar(middleRotor.position)} ${toChar(rightRotor.position)}`)
+  addStep(`Input util now: ${state.keyboardInput}`)
+  addStep(`Output util now: ${state.output}`)
+
+  // front-end management for the input
+  state.keyboardInput += keyChar
+
+  // perform rotor rotation to all appliable rotors
+  rotateRotors()
+
+  // perform the first plugboard substitution
+  let entryToPlugboard = plugboardEncode(keyChar)
+
+  // main enigma logic forward
+  const rightRotorToMiddle = state.rotors.RIGHT.encodeForward(entryToPlugboard)
+  addStep(`Right rotor (${toChar(rightRotor.position)}): ${entryToPlugboard} -> ${toChar(rightRotorToMiddle)}`)
+
+  const middleRotorToLeft = middleRotor.encodeForward(rightRotorToMiddle)
+  addStep(`Middle rotor (${toChar(middleRotor.position)}): ${toChar(rightRotorToMiddle)} -> ${toChar(middleRotorToLeft)}`)
+
+  const leftRotorToReflector = leftRotor.encodeForward(middleRotorToLeft)
+  addStep(`Left rotor (${toChar(leftRotor.position)}): ${toChar(middleRotorToLeft)} -> ${toChar(leftRotorToReflector)}`)
+
+  // REFLECTOR
+  const reflectorToLeft = reflector.reflect(leftRotorToReflector)
+  addStep(`Reflector: ${toChar(leftRotorToReflector)} -> ${toChar(reflectorToLeft)}`)
+
+  // main enigma logic backward
+  const leftRotorToMiddle = leftRotor.encodeReturn(reflectorToLeft)
+  addStep(`Left rotor (${toChar(leftRotor.position)}): ${toChar(reflectorToLeft)} -> ${toChar(leftRotorToMiddle)}`)
+
+  const middleRotorToRight = middleRotor.encodeReturn(leftRotorToMiddle)
+  addStep(`Middle rotor (${toChar(middleRotor.position)}): ${toChar(leftRotorToMiddle)} -> ${toChar(middleRotorToRight)}`)
+
+  // perform the second plugboard substitution
+  const rightRotorToPlugboard = rightRotor.encodeReturn(middleRotorToRight)
+  addStep(`Right rotor (${toChar(rightRotor.position)}): ${toChar(middleRotorToRight)} -> ${toChar(rightRotorToPlugboard)}`)
+
+  // final output
+  const plugboardToOutput = plugboardEncode(toChar(rightRotorToPlugboard) as AllowedAlphabet)
+
+  // front-end management for the output
+  state.output += plugboardToOutput
+
+  // turn on the lamp
+  turnOnLampboard(plugboardToOutput)
+
+  addStep(`Lampboard: ${plugboardToOutput}`)
+  addStep(`Rotors after rotation: ${toChar(leftRotor.position)} ${toChar(middleRotor.position)} ${toChar(rightRotor.position)}`)
+  addStep(`New Input: ${state.output}`)
+  addStep(`New Output: ${state.output}`)
+  addStep(`------- ROTATION FOR KEY ${keyChar} --------`)
+}
+
+/**
+ * Plugboard substitution logic
+ */
+const plugboardEncode = (keyChar: AllowedAlphabet) => {
+  const {plugboard, steps} = state
+
+  if (plugboard[keyChar] !== '') {
+    steps.push(`Plugboard: ${keyChar} -> ${plugboard[keyChar]}`)
+    return plugboard[keyChar] as AllowedAlphabet
+  } else {
+    steps.push(`Plugboard: ${keyChar} -> ${keyChar}`)
+    return keyChar
+  }
+}
+
+const rotateRotors = () => {
+  const { rotors: {LEFT: leftRotor, MIDDLE: middleRotor, RIGHT: rightRotor} } = state
+  // if the middle rotor is at notch
+  // there's a double stepping mechanism
+  // that makes the middle rotor turns twice
+  // read more: https://www.cryptomuseum.com/crypto/enigma/working.htm#double
+  if (middleRotor.isAtNotch()) {
+    middleRotor.turn()
+    leftRotor.turn()
+  } else if (rightRotor.isAtNotch()) {
+    middleRotor.turn()
+  }
+
+  rightRotor.turn()
 }
 
 const turnOnLampboard = (keyChar: AllowedAlphabet) => {
   switchedOnLetter.value = keyChar
+  // debounce function to turn off the lamp
+  // so they don't overlap
   if (timeoutClock) clearTimeout(timeoutClock)
   timeoutClock = setTimeout(() => {
     switchedOnLetter.value = ''
   }, 1000)
+}
+
+// UTIL
+
+/**
+ * Utility function to add steps to the step list
+ */
+const addStep = (step: string) => {
+  state.steps.push(step)
 }
 </script>
 
@@ -158,5 +268,19 @@ header .description {
 header p {
   margin-top: 5px;
   white-space: pre-wrap;
+}
+
+h1 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: bold;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.keyboard-input {
+  margin: 25px;
+  width: 60%;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
 }
 </style>
