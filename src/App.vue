@@ -29,8 +29,8 @@
     </section>
   </section>
 
-  <section class="lampboard container has-text-centered mb-5">
-    <Lampboard/>
+  <section class="lampboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered mb-5">
+    <Lampboard :switch-on="switchedOnLetter"/>
   </section>
 
   <section class="keyboard container has-text-centered mb-5">
@@ -52,7 +52,7 @@ import { reactive } from '@vue/reactivity'
 import { GlobalState } from './types'
 import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
-import { provide } from 'vue'
+import { provide, ref } from 'vue'
 
 /**
  * The global state approach is not the best option in the case of any app
@@ -105,7 +105,7 @@ const state = reactive<GlobalState>({
   input: '',
   output: ''
 })
-
+const switchedOnLetter = ref('')
 provide('state', state)
 </script>
 
