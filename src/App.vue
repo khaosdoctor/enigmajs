@@ -43,6 +43,18 @@
     <Keyboard @key-pressed="handleKeyPress"/>
   </section>
 
+  <section class="steps mb-5">
+    <h1 class="has-text-centered"><a @click="showSteps = !showSteps">{{showSteps ? 'Hide' : 'Show'}} encoding steps</a></h1>
+    <div v-show="showSteps" class="has-text-centered">
+      <div v-show="state.steps.length === 0">No steps to show, please type something in the keyboard</div>
+      <ul v-show="state.steps.length>0">
+        <li v-for="step in state.steps" :key="step" :class="{separator: step.charAt(0) === '-'}">
+          {{ step }}
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <footer>
     <div class="columns">
       <div class="column is-full has-text-centered">
@@ -61,12 +73,14 @@ import Plugboard from './components/Plugboard.vue'
 import RotorComponent from './components/Rotors.vue'
 import Output from './components/Output.vue'
 import KeyboardInput from './fragments/KeyboardInput.vue'
+
 import { reactive } from '@vue/reactivity'
-import { AllowedAlphabet, ALLOWED_ALPHABET, GlobalState } from './types'
+import { AllowedAlphabet,  GlobalState } from './types'
 import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide, ref } from 'vue'
 import { toChar } from './util'
+import { StepTimingFunction } from 'csstype'
 
 /**
  * The global state approach is not the best option in the case of any app
@@ -123,8 +137,8 @@ const state = reactive<GlobalState>({
 
 // REFS AND VARIABLES
 
-
 provide('state', state)
+const showSteps = ref(false)
 // letter that's currently being switched on in the lampboard
 const switchedOnLetter = ref('')
 // throttling the turn off of the lamp to make it look more realistic
@@ -189,7 +203,7 @@ const handleKeyPress = (keyChar: AllowedAlphabet) => {
 
   addStep(`Lampboard: ${plugboardToOutput}`)
   addStep(`Rotors after rotation: ${toChar(leftRotor.position)} ${toChar(middleRotor.position)} ${toChar(rightRotor.position)}`)
-  addStep(`New Input: ${state.output}`)
+  addStep(`New Input: ${state.keyboardInput}`)
   addStep(`New Output: ${state.output}`)
   addStep(`------- ROTATION FOR KEY ${keyChar} --------`)
 }
@@ -282,5 +296,15 @@ h1 {
   width: 60%;
   text-align: center;
   font-family: 'IBM Plex Mono', monospace;
+}
+
+li.separator {
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+li.separator:first-child {
+  margin-top: 10px;
 }
 </style>
