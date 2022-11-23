@@ -6,15 +6,15 @@
 
     <div class="description">
       <p>
-        This is a simple Enigma machine simulator. It is not a perfect replica of the original machine, but it is close enough to be useful for learning about it.
-      </p>
-
-      <p>
-        This replicates the Wermacht I (or the Enigma I) machine, which was used by the German military during World War II. It is a three-rotor machine, with a reflector and a plugboard. The rotors are interchangeable, as well as the reflector (despite it was not that common to do so since it took a long time).
+        This replicates the <strong>Wermacht I (or the Enigma I)</strong> machine, which was used by the German military during World War II. It is not a perfect replica of the original machine, but it is close enough to be useful for learning about it. It is a three-rotor machine, with a reflector and a plugboard. The rotors are interchangeable, as well as the reflector.
       </p>
 
       <p>
         I used this <a href="https://www.cryptomuseum.com/crypto/enigma/index.htm" target="_blank">excellent resource</a> to learn about the machine and to build this simulator, the logo is also a courtesy of them (with an addition of a metal gradient border by me). And the code is heavily inspired on the professor <a href="http://github.com/mikepound">Mike Pound's</a> version of the Enigma machine, which you can find <a href="https://github.com/mikepound/enigma" target="_blank">here</a>.
+      </p>
+
+      <p>
+        You can find the source code of this project <a href="https://github.lsantos.dev/enigmajs" target="_blank">here</a> with all the details and instructions, please leave a star if you liked it 🥰.
       </p>
     </div>
 
