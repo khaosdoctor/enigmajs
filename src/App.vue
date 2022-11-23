@@ -141,8 +141,6 @@ provide('state', state)
 const showSteps = ref(false)
 // letter that's currently being switched on in the lampboard
 const switchedOnLetter = ref('')
-// throttling the turn off of the lamp to make it look more realistic
-let timeoutClock: number | null = null
 
 // MAIN LOGIC
 
@@ -239,12 +237,14 @@ const rotateRotors = () => {
   rightRotor.turn()
 }
 
+// throttling the turn off of the lamp to make it look more realistic
+let timeoutClock: number | null = null
 const turnOnLampboard = (keyChar: AllowedAlphabet) => {
   switchedOnLetter.value = keyChar
   // debounce function to turn off the lamp
   // so they don't overlap
   if (timeoutClock) clearTimeout(timeoutClock)
-  timeoutClock = setTimeout(() => {
+  timeoutClock = window.setTimeout(() => {
     switchedOnLetter.value = ''
   }, 1000)
 }
