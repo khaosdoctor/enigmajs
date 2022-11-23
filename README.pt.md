@@ -2,6 +2,25 @@
 
 > Uma implementação em JavaScript da máquina Enigma I.
 
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Enigma JS - O simulador Enigma I](#enigma-js-o-simulador-enigma-i)
+  - [História](#históriahttpswwwcryptomuseumcomcryptoenigmahisthtm)
+  - [Como usar](#como-usar)
+    - [Conceitos](#conceitos)
+    - [Livros de código](#livros-de-código)
+    - [Criptografando uma mensagem](#criptografando-uma-mensagem)
+      - [Configurando o cabeçalho](#configurando-o-cabeçalho)
+    - [Descriptografando uma mensagem](#descriptografando-uma-mensagem)
+  - [Leitura adicional](#leitura-adicional)
+  - [Contribuição e Desenvolvimento](#contribuição-e-desenvolvimento)
+
+<!-- /code_chunk_output -->
+
+
 Consulte esta documentação em [English](README.md) | [Português](README.pt.md)
 
 Isso faz parte da minha série de vídeos na máquina Enigma. Você pode assistir aos vídeos no meu [canal do YouTube](https://youtube.lsantos.dev) (em português).
