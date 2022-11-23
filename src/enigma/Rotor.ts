@@ -68,19 +68,19 @@ const rotorConfigurations = {
 }
 
 export class Rotor {
-  #wiring: RotorWirings
-  #inputWiringAsIndexArray: number[] = []
-  #outputWiringAsIndexArray: number[] = []
-  #notch: typeof rotorConfigurations.I.notch
+  private wiring: RotorWirings
+  private inputWiringAsIndexArray: number[] = []
+  private outputWiringAsIndexArray: number[] = []
+  private notch: typeof rotorConfigurations.I.notch
 
   constructor (public readonly name: Rotors, public position: number, public ringSetting: number) {
-    this.#wiring = rotorConfigurations[name].wiring
-    this.#notch = rotorConfigurations[name].notch
-    this.#createInputWirings()
+    this.wiring = rotorConfigurations[name].wiring
+    this.notch = rotorConfigurations[name].notch
+    this.createInputWirings()
   }
 
   isAtNotch () {
-    return this.position === this.#notch.position
+    return this.position === this.notch.position
   }
 
   turn () {
@@ -124,12 +124,12 @@ export class Rotor {
    * ]
    * This means that the letter E (4) will be sent to the next rotor as the letter A (0), the opposite of the above.
    */
-  #createInputWirings () {
-    const inputWiring = this.#wiring.split('')
+  private createInputWirings () {
+    const inputWiring = this.wiring.split('')
     for (let [index, letter] of inputWiring.entries()) {
       const letterIndex = toAlphabetIndex(letter)
-      this.#inputWiringAsIndexArray[index] = letterIndex
-      this.#outputWiringAsIndexArray[letterIndex] = index
+      this.inputWiringAsIndexArray[index] = letterIndex
+      this.outputWiringAsIndexArray[letterIndex] = index
     }
 
     /**
@@ -139,12 +139,12 @@ export class Rotor {
     // this.#outputWiringAsIndexArray = this.#inputWiringAsIndexArray.map((_, i) => this.#inputWiringAsIndexArray.indexOf(i))
   }
 
-  #encode (letter: string, direction: RotorDirection) {
-    const letterIndex = toAlphabetIndex(letter)
+  private encode (letter: string | number, direction: RotorDirection) {
+    const letterIndex = typeof letter === 'string' ? toAlphabetIndex(letter) : letter
     const shift = this.position - this.ringSetting
     const wireMapping = {
-      [RotorDirection.INPUT]: this.#inputWiringAsIndexArray,
-      [RotorDirection.OUTPUT]: this.#outputWiringAsIndexArray,
+      [RotorDirection.INPUT]: this.inputWiringAsIndexArray,
+      [RotorDirection.OUTPUT]: this.outputWiringAsIndexArray,
     }[direction]
 
     /**
@@ -161,11 +161,11 @@ export class Rotor {
     return normalizeToAlphabetBounds(outboundLetterIndex - shift)
   }
 
-  encodeForward (letter: string) {
-    return this.#encode(letter, RotorDirection.INPUT)
+  encodeForward (letter: string | number) {
+    return this.encode(letter, RotorDirection.INPUT)
   }
 
-  encodeReturn (letter: string) {
-    return this.#encode(letter, RotorDirection.OUTPUT)
+  encodeReturn (letter: string | number) {
+    return this.encode(letter, RotorDirection.OUTPUT)
   }
 }
