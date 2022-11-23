@@ -20,7 +20,7 @@
 
   </header>
 
-  <section class="columns mb-5">
+  <section class="columns settings mb-5 is-flex is-align-items-center">
     <section class="rotors column is-half has-text-centered">
       <RotorComponent/>
     </section>
@@ -33,13 +33,23 @@
     <Lampboard :switch-on="switchedOnLetter"/>
   </section>
 
-  <section class="keyboard container has-text-centered mb-5">
+  <section class="keyboard has-text-centered mb-5">
     <Keyboard/>
   </section>
 
-  <section class="output container has-text-centered mb-5">
+  <section class="output has-text-centered mb-5">
     <Output />
   </section>
+
+  <footer>
+    <div class="columns">
+      <div class="column is-full has-text-centered">
+        <p>See the <a href="http://github.lsantos.dev/enigmajs" target="_blank" rel="noopener noreferrer">original repository</a> for license information</p>
+        <p>Made with 💛 with JavaScript and Vue.js | Feel free to use this application in any <strong class="is-italic">non-commercial</strong> way</p>
+        <p>Copyright {{new Date().getFullYear()}} © <a target="_blank" href="http://lsantos.dev">Lucas Santos</a></p>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
@@ -112,14 +122,10 @@ provide('state', state)
 <style scoped>
 .plugboard {
   border-left: 1px dashed #ededed;
-  border-bottom: 1px dashed #ededed;
 }
 
-.rotors, .lampboard, .keyboard {
+.settings {
   border-bottom: 1px dashed #ededed;
-}
-
-.rotors, .plugboard {
   border-top: 1px dashed #ededed;
 }
 

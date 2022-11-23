@@ -102,4 +102,12 @@ const setRingSetting = (position: RotorPositions, letterAsChar: string) => {
   border-top: 1px solid #ececec;
   padding: 5px 0;
 }
+
+.reflector {
+  border-right: 1px solid #ececec;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 </style>
