@@ -29,11 +29,11 @@
     </section>
   </section>
 
-  <section class="lampboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered mb-5">
+  <section class="lampboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered">
     <Lampboard :switch-on="switchedOnLetter"/>
   </section>
 
-  <section class="keyboard has-text-centered mb-5">
+  <section class="keyboard is-flex is-flex-direction-column is-align-items-center is-align-content-space-between is-justify-content-space-around has-text-centered mb-5">
     <Keyboard/>
   </section>
 
@@ -127,6 +127,11 @@ provide('state', state)
 .settings {
   border-bottom: 1px dashed #ededed;
   border-top: 1px dashed #ededed;
+}
+
+.lampboard {
+  margin-bottom: 50px;
+  border-bottom: 18px solid #ededed;
 }
 
 header .description {

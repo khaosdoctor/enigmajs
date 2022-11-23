@@ -1,11 +1,9 @@
 <template>
-
-  <div class="lampboard-row columns has-text-centered" v-for="row in KEYBOARD_ROWS">
-    <span v-for="letter in row" class="column lampboard-key-wrapper mb-5">
-      <span :class="{[`lampboard-${letter}`]: true, 'lampboard-key': true, 'ml-6': true, on: props.switchOn === letter}">{{letter}}</span>
-    </span>
-  </div>
-
+    <div class="lampboard-row columns has-text-centered" v-for="row in KEYBOARD_ROWS">
+      <span v-for="letter in row" class="column lampboard-key-wrapper mb-5">
+        <span :class="{[`lampboard-${letter}`]: true, 'lampboard-key': true, 'ml-6': true, on: props.switchOn === letter}">{{letter}}</span>
+      </span>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -22,17 +20,24 @@ const props = defineProps<{switchOn: string}>()
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: rgb(34, 34, 34);
-  color: rgb(155, 155, 155);
+  /* background-color: rgb(34, 34, 34); */
+  background: #000000;
+  background: -moz-linear-gradient(-45deg, #000000 0%, #0a0a0a 11%, #0a0a0a 21%, #4e4e4e 33%, #383838 37%, #383838 37%, #1b1b1b 43%, #1b1b1b 43%, #000000 100%);
+  background: -webkit-linear-gradient(-45deg, #000000 0%,#0a0a0a 11%,#0a0a0a 21%,#4e4e4e 33%,#383838 37%,#383838 37%,#1b1b1b 43%,#1b1b1b 43%,#000000 100%);
+  background: linear-gradient(135deg, #000000 0%,#0a0a0a 11%,#0a0a0a 21%,#4e4e4e 33%,#383838 37%,#383838 37%,#1b1b1b 43%,#1b1b1b 43%,#000000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 );
+  color: #d0d0d0;
   font-weight: bold;
+  cursor: not-allowed;
 }
 
 .on {
-  background: rgb(255,245,208);
-  background: -moz-radial-gradient(circle, rgba(255,245,208,1) 0%, rgba(255,201,0,1) 100%);
-  background: -webkit-radial-gradient(circle, rgba(255,245,208,1) 0%, rgba(255,201,0,1) 100%);
-  background: radial-gradient(circle, rgba(255,245,208,1) 0%, rgba(255,201,0,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff5d0",endColorstr="#ffc900",GradientType=1);
-  color: #000;
+  color: #333333;
+  background: #fceabb;
+  background: -moz-linear-gradient(-45deg, #fceabb 0%, #f8b500 40%, #f8b500 41%, #fccd4d 43%, #fbdf93 100%);
+  background: -webkit-linear-gradient(-45deg, #fceabb 0%,#f8b500 40%,#f8b500 41%,#fccd4d 43%,#fbdf93 100%);
+  background: linear-gradient(135deg, #fceabb 0%,#f8b500 40%,#f8b500 41%,#fccd4d 43%,#fbdf93 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 );
+  border: 2px solid #444;
 }
 </style>
