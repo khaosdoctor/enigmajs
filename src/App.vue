@@ -60,7 +60,7 @@
       <div class="column is-full has-text-centered">
         <p>See the <a href="http://github.lsantos.dev/enigmajs" target="_blank" rel="noopener noreferrer">original repository</a> for license information</p>
         <p>Made with 💛 with JavaScript and Vue.js | Feel free to use this application in any <strong class="is-italic">non-commercial</strong> way</p>
-        <p>Copyright {{new Date().getFullYear()}} © <a target="_blank" href="http://lsantos.dev">Lucas Santos</a></p>
+        <p>{{`v${version}`}} Copyright {{new Date().getFullYear()}} © <a target="_blank" href="http://lsantos.dev">Lucas Santos</a></p>
       </div>
     </div>
   </footer>
@@ -80,6 +80,7 @@ import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide, ref } from 'vue'
 import { toChar } from './util'
+import { version } from '../package.json'
 
 /**
  * The global state approach is not the best option in the case of any app
