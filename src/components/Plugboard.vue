@@ -33,16 +33,11 @@ const onInput = (event: Event, plugboardPosition: AllowedAlphabet) => {
 }
 
 const setPlugboard = (plugboardPosition: AllowedAlphabet, letterToSwap: AllowedAlphabet) => {
-  const valueInLetterToSwap = state.plugboard[letterToSwap] as AllowedAlphabet
-  state.plugboard[plugboardPosition] = letterToSwap
-  state.plugboard[letterToSwap] = plugboardPosition
-  state.plugboard[valueInLetterToSwap] = ''
+  // TODO: Add set plugboard function
 }
 
 const clearPlugBoard = (plugboardPosition: AllowedAlphabet) => {
-  const swapLetter = state.plugboard[plugboardPosition] as AllowedAlphabet
-  state.plugboard[plugboardPosition] = ''
-  state.plugboard[swapLetter] = ''
+  // TODO: add clear plugboard function
 }
 </script>
 

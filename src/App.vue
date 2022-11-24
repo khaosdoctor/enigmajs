@@ -95,13 +95,14 @@ import { version } from '../package.json'
  */
 const state = reactive<GlobalState>({
   rotors: {
-    [RotorPositions.LEFT]: new Rotor(Rotors.III, 0, 0),
-    [RotorPositions.MIDDLE]: new Rotor(Rotors.II, 0, 0),
-    [RotorPositions.RIGHT]: new Rotor(Rotors.I, 0, 0)
+    // TODO: Initialize rotors
+    [RotorPositions.LEFT]:
+    [RotorPositions.MIDDLE]:
+    [RotorPositions.RIGHT]:
   },
   // UKW-B was the most common reflector used by the German military during WWII
   // since changing reflectors was a time-consuming process.
-  reflector: new Reflector(Reflectors.B),
+  reflector: // TODO: Initialize reflector
   plugboard: {
     A: '',
     B: '',
@@ -156,48 +157,40 @@ const handleKeyPress = (keyChar: AllowedAlphabet) => {
   addStep(`Input util now: ${state.keyboardInput}`)
   addStep(`Output util now: ${state.output}`)
 
-  // front-end management for the input
-  state.keyboardInput += keyChar
-
-  // perform rotor rotation to all appliable rotors
-  rotateRotors()
-
-  // perform the first plugboard substitution
-  let entryToPlugboard = plugboardEncode(keyChar)
 
   // main enigma logic forward
-  const rightRotorToMiddle = state.rotors.RIGHT.encodeForward(entryToPlugboard)
+
   addStep(`Right rotor (${toChar(rightRotor.position)}): ${entryToPlugboard} -> ${toChar(rightRotorToMiddle)}`)
 
-  const middleRotorToLeft = middleRotor.encodeForward(rightRotorToMiddle)
+
   addStep(`Middle rotor (${toChar(middleRotor.position)}): ${toChar(rightRotorToMiddle)} -> ${toChar(middleRotorToLeft)}`)
 
-  const leftRotorToReflector = leftRotor.encodeForward(middleRotorToLeft)
+
   addStep(`Left rotor (${toChar(leftRotor.position)}): ${toChar(middleRotorToLeft)} -> ${toChar(leftRotorToReflector)}`)
 
   // REFLECTOR
-  const reflectorToLeft = reflector.reflect(leftRotorToReflector)
+
   addStep(`Reflector: ${toChar(leftRotorToReflector)} -> ${toChar(reflectorToLeft)}`)
 
   // main enigma logic backward
-  const leftRotorToMiddle = leftRotor.encodeReturn(reflectorToLeft)
+
   addStep(`Left rotor (${toChar(leftRotor.position)}): ${toChar(reflectorToLeft)} -> ${toChar(leftRotorToMiddle)}`)
 
-  const middleRotorToRight = middleRotor.encodeReturn(leftRotorToMiddle)
+
   addStep(`Middle rotor (${toChar(middleRotor.position)}): ${toChar(leftRotorToMiddle)} -> ${toChar(middleRotorToRight)}`)
 
   // perform the second plugboard substitution
-  const rightRotorToPlugboard = rightRotor.encodeReturn(middleRotorToRight)
+
   addStep(`Right rotor (${toChar(rightRotor.position)}): ${toChar(middleRotorToRight)} -> ${toChar(rightRotorToPlugboard)}`)
 
   // final output
-  const plugboardToOutput = plugboardEncode(toChar(rightRotorToPlugboard) as AllowedAlphabet)
+
 
   // front-end management for the output
-  state.output += plugboardToOutput
+
 
   // turn on the lamp
-  turnOnLampboard(plugboardToOutput)
+
 
   addStep(`Lampboard: ${plugboardToOutput}`)
   addStep(`Rotors after rotation: ${toChar(leftRotor.position)} ${toChar(middleRotor.position)} ${toChar(rightRotor.position)}`)
@@ -210,31 +203,11 @@ const handleKeyPress = (keyChar: AllowedAlphabet) => {
  * Plugboard substitution logic
  */
 const plugboardEncode = (keyChar: AllowedAlphabet) => {
-  const {plugboard, steps} = state
-
-  if (plugboard[keyChar] !== '') {
-    steps.push(`Plugboard: ${keyChar} -> ${plugboard[keyChar]}`)
-    return plugboard[keyChar] as AllowedAlphabet
-  } else {
-    steps.push(`Plugboard: ${keyChar} -> ${keyChar}`)
-    return keyChar
-  }
+  // TODO: implement plugboard logic
 }
 
 const rotateRotors = () => {
-  const { rotors: {LEFT: leftRotor, MIDDLE: middleRotor, RIGHT: rightRotor} } = state
-  // if the middle rotor is at notch
-  // there's a double stepping mechanism
-  // that makes the middle rotor turns twice
-  // read more: https://www.cryptomuseum.com/crypto/enigma/working.htm#double
-  if (middleRotor.isAtNotch()) {
-    middleRotor.turn()
-    leftRotor.turn()
-  } else if (rightRotor.isAtNotch()) {
-    middleRotor.turn()
-  }
-
-  rightRotor.turn()
+  // TODO: implement rotor rotation logic
 }
 
 // throttling the turn off of the lamp to make it look more realistic
