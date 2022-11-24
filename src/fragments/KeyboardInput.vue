@@ -3,8 +3,7 @@
 </template>
 <script setup lang="ts">
 import { inject } from 'vue'
-import { GlobalState } from '../types'
-import { isLetter } from '../util'
+import { AllowedAlphabet, ALLOWED_ALPHABET, GlobalState } from '../types'
 
 const state = inject<GlobalState>('state')!
 const emit = defineEmits(['keyboard-input'])
@@ -12,7 +11,9 @@ const emit = defineEmits(['keyboard-input'])
   const handleKeyboardPress = (e: Event) => {
   e.preventDefault()
   const key = (e as KeyboardEvent).key.toUpperCase()
-  if (!isLetter(key)) return false
+  if (!ALLOWED_ALPHABET.includes(key as AllowedAlphabet)) {
+    return false
+  }
   emit('keyboard-input', key)
   return true
 }
