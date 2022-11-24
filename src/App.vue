@@ -80,7 +80,6 @@ import { Rotor, RotorPositions, Rotors } from './enigma/Rotor'
 import { Reflector, Reflectors } from './enigma/Reflector'
 import { provide, ref } from 'vue'
 import { toChar } from './util'
-import { StepTimingFunction } from 'csstype'
 
 /**
  * The global state approach is not the best option in the case of any app
