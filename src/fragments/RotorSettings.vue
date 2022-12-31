@@ -3,7 +3,7 @@
   <div class="rotor-select">
     <span class="select">
       <select name="rotor" v-model="rotor" @change="selectRotor">
-        <option v-for="letter in Rotors">{{letter.toUpperCase()}}</option>
+        <option v-for="rotorName in allowedOptions">{{rotorName.toUpperCase()}}</option>
       </select>
     </span>
   </div>
@@ -23,7 +23,8 @@ import { Rotors, RotorPositions, Rotor } from '../enigma/Rotor'
 import { ALLOWED_ALPHABET } from '../types'
 
 const props = defineProps({
-  position: String
+  position: String,
+  allowedOptions: Array<Rotors>
 })
 
 const emit = defineEmits(['rotor-set', 'setting-set', 'position-set'])
